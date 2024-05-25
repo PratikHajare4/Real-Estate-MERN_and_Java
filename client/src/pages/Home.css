@@ -1,0 +1,70 @@
+.search-container {
+    background: linear-gradient(to bottom, #000064, #000000);
+    color: white;
+    padding: 20px;
+    padding-top: 150px;
+  
+    text-align: center;
+  }
+  
+  h1 {
+    color: #ffb703;
+  
+  }
+  
+  .tabs button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+  
+   
+    cursor: pointer;
+  }
+  
+  .tabs .active {
+    border-bottom: 2px solid #ffb703;
+  }
+  
+  form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 20px; /* Added padding */
+    background: #ffffff20; /* Light white background for better visibility */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+    backdrop-filter: blur(4px); /* Optional: Blur effect for glassmorphism style */
+  }
+  
+  input, select {
+    padding: 10px;
+    width: 200px;
+  }
+  .search-button {
+    display: inline-flex;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    background-color: #fb8500; /* Orange background */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  /* Additional style to separate from other buttons */
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding-top: 100px;
+    padding-bottom: 20px;
+    font-size: 25px;
+  }
+  
+  .ram{
+    color:black;
+  }
+  .search-city-input{
+  width:650px;
+  }

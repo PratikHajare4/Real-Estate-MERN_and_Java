@@ -120,14 +120,16 @@ export default function CreateListing() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if (formData.imageUrls.length < 1)
+            if (formData.imageUrls.length < 1) {
                 return setError("You must upload at least one image");
-            if (+formData.regularPrice < +formData.discountPrice)
+            }
+            if (+formData.regularPrice < +formData.discountPrice) {
                 return setError('Discount price must be lower than regular price');
+            }
             setLoading(true);
             setError(false);
             const baseURL = 'http://localhost:3000';
-            const res = await fetch(`${baseURL}/api/create`, {
+            const res = await fetch(`${baseURL}/api/listing/create`, {  // Corrected endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -136,8 +138,8 @@ export default function CreateListing() {
             });
             const data = await res.json();
             setLoading(false);
-            if (data.success === false) {
-                setError(data.message);
+            if (!res.ok || data.success === false) {
+                setError(data.message || 'An error occurred');
             } else {
                 navigate(`/listing/${data._id}`);
             }
@@ -146,7 +148,7 @@ export default function CreateListing() {
             setLoading(false);
         }
     };
-
+    
     return (
         <main className='p-3 max-w-4xl mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Create a Listing</h1>

@@ -24,13 +24,26 @@ export default function CreateListing() {
         projectRERAID: '',
         possessionDate: '',
         carpetRange: '',
-      
         amenities: {
             gym: false,
             pool: false,
-            park: false
+            park: false,
+            garden: false,
+            maintenanceStaff: false,
+            powerBackup: false,
+            elevator: false,
+            waterSupply: false,
+            carParking: false,
+            cctv: false,
+            indoorGames: false,
+            clubHouse: false,
+            joggingTrack: false,
+            rainwaterHarvesting: false,
+            sewageTreatment: false,
+            swimmingPool: false,
         }
     });
+    
     const [imageUploadError, setImageUploadError] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(false);
@@ -96,19 +109,22 @@ export default function CreateListing() {
                 ...formData,
                 type: id
             });
-        } else if (id === 'parking' || id === 'furnished' || id === 'offer') {
-            setFormData({
-                ...formData,
-                [id]: checked
-            });
-        } else if (id in formData.amenities) {
-            setFormData({
-                ...formData,
-                amenities: {
-                    ...formData.amenities,
-                    [id]: checked
-                }
-            });
+        } else if (id === 'parking' || id === 'furnished' || id === 'offer' || id.startsWith('amenities.')) {
+            if (id.startsWith('amenities.')) {
+                const amenity = id.split('.')[1];
+                setFormData({
+                    ...formData,
+                    amenities: {
+                        ...formData.amenities,
+                        [amenity]: checked
+                    }
+                });
+            } else {
+                setFormData({
+                    ...formData,
+                    [id]: checked,
+                });
+            }
         } else {
             setFormData({
                 ...formData,
@@ -116,6 +132,9 @@ export default function CreateListing() {
             });
         }
     };
+    
+    
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -129,7 +148,7 @@ export default function CreateListing() {
             setLoading(true);
             setError(false);
             const baseURL = 'http://localhost:3000';
-            const res = await fetch(`${baseURL}/api/listing/create`, {  // Corrected endpoint
+            const res = await fetch(`${baseURL}/api/listing/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -148,94 +167,249 @@ export default function CreateListing() {
             setLoading(false);
         }
     };
-    
+
     return (
-        <main className='p-3 max-w-4xl mx-auto'>
-            <h1 className='text-3xl font-semibold text-center my-7'>Create a Listing</h1>
-            <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
-                <div className='flex flex-col gap-4 flex-1'>
-                    <p>Name</p>
-                    <input onChange={handleChange} value={formData.name} type="text" placeholder='Name' className='border text-black border-rose-300 p-3 rounded-lg' id="name" maxLength="62" minLength="10" required />
-                    <p>Description</p>
-                    <input onChange={handleChange} value={formData.description} type="text" placeholder='Description' className='border border-rose-300 p-3 rounded-lg' id="description" required />
-                    <p>Address</p>
-                    <input onChange={handleChange} value={formData.address} type="text" placeholder='Address' className='border border-rose-300 p-3 rounded-lg' id="address" required />
-                    <p>Apartments</p>
-                    <input onChange={handleChange} value={formData.apartments} type="text" placeholder='Apartments' className='border border-rose-300 p-3 rounded-lg' id="apartments" required />
-                    <p>Total Area</p>
-                    <input onChange={handleChange} value={formData.totalArea} type="text" placeholder='Total Area' className='border border-rose-300 p-3 rounded-lg' id="totalArea" required />
-                    <p>Project RERA ID</p>
-                    <input onChange={handleChange} value={formData.projectRERAID} type="text" placeholder='Project RERA ID' className='border border-rose-300 p-3 rounded-lg' id="projectRERAID" required />
-                    <p>Possession Date</p>
-                    <input onChange={handleChange} value={formData.possessionDate} type="text" placeholder='Possession Date' className='border border-rose-300 p-3 rounded-lg' id="possessionDate" required />
-                    <p>Carpet Range</p>
-                    <input onChange={handleChange} value={formData.carpetRange} type="text" placeholder='Carpet Range' className='border border-rose-300 p-3 rounded-lg' id="carpetRange" required />
-                    
-                    <p>Amenities</p>
-                    <div className='flex gap-4'>
-                        <label className='flex items-center gap-2'>
-                            <input type="checkbox" id="gym" onChange={handleChange} checked={formData.amenities.gym} className='w-4 h-4' />
-                            Gym
-                        </label>
-                        <label className='flex items-center gap-2'>
-                            <input type="checkbox" id="pool" onChange={handleChange} checked={formData.amenities.pool} className='w-4 h-4' />
-                            Pool
-                        </label>
-                        <label className='flex items-center gap-2'>
-                            <input type="checkbox" id="park" onChange={handleChange} checked={formData.amenities.park} className='w-4 h-4' />
-                            Park
-                        </label>
-                        {/* Add more amenities as needed */}
-                    </div>
+        <main className='max-w-md px-2 mx-auto'>
+            <h1 className='text-3xl text-center mt-6 font-bold'>Create a Listing</h1>
+            <form onSubmit={handleSubmit}>
+                
+                <div className='flex flex-col'>
+                <p className='text-lg mt-6 font-semibold'>Name</p>
+                <input
+                    type='text'
+                    id='name'
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder='Name'
+                    required
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Description</p>
+                <textarea
+                    id='description'
+                    value={formData.description}
+                    onChange={handleChange}
+                    placeholder='Description'
+                    required
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Address</p>
+                <input
+                    type='text'
+                    id='address'
+                    value={formData.address}
+                    onChange={handleChange}
+                    placeholder='Address'
+                    required
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Bedrooms</p>
+                <input
+                    type='number'
+                    id='bedrooms'
+                    value={formData.bedrooms}
+                    onChange={handleChange}
+                    min='1'
+                    required
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Bathrooms</p>
+                <input
+                    type='number'
+                    id='bathrooms'
+                    value={formData.bathrooms}
+                    onChange={handleChange}
+                    min='1'
+                    required
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Regular Price</p>
+                <input
+                    type='number'
+                    id='regularPrice'
+                    value={formData.regularPrice}
+                    onChange={handleChange}
+                    min='1'
+                    required
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Discount Price</p>
+                <input
+                    type='number'
+                    id='discountPrice'
+                    value={formData.discountPrice}
+                    onChange={handleChange}
+                    min='0'
+                    required
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Offer</p>
+                <input
+                    type='checkbox'
+                    id='offer'
+                    checked={formData.offer}
+                    onChange={handleChange}
+                    className='mr-2'
+                />
+                <label htmlFor='offer'>Check if there is a special offer</label>
+
+                <p className='text-lg mt-6 font-semibold'>Parking</p>
+                <input
+                    type='checkbox'
+                    id='parking'
+                    checked={formData.parking}
+                    onChange={handleChange}
+                    className='mr-2'
+                />
+                <label htmlFor='parking'>Check if there is parking available</label>
+
+                <p className='text-lg mt-6 font-semibold'>Furnished</p>
+                <input
+                    type='checkbox'
+                    id='furnished'
+                    checked={formData.furnished}
+                    onChange={handleChange}
+                    className='mr-2'
+                />
+                <label htmlFor='furnished'>Check if the property is furnished</label>
+
+                <p className='text-lg mt-6 font-semibold'>Apartments</p>
+                <input
+                    type='text'
+                    id='apartments'
+                    value={formData.apartments}
+                    onChange={handleChange}
+                    placeholder='Number of Apartments'
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Total Area</p>
+                <input
+                    type='text'
+                    id='totalArea'
+                    value={formData.totalArea}
+                    onChange={handleChange}
+                    placeholder='Total Area'
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Project RERA ID</p>
+                <input
+                    type='text'
+                    id='projectRERAID'
+                    value={formData.projectRERAID}
+                    onChange={handleChange}
+                    placeholder='Project RERA ID'
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Possession Date</p>
+                <input
+                    type='date'
+                    id='possessionDate'
+                    value={formData.possessionDate}
+                    onChange={handleChange}
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+                <p className='text-lg mt-6 font-semibold'>Carpet Range</p>
+                <input
+                    type='text'
+                    id='carpetRange'
+                    value={formData.carpetRange}
+                    onChange={handleChange}
+                    placeholder='Carpet Range'
+                    className='w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out'
+                />
+
+<p className='text-lg mt-6 font-semibold'>Sell / Rent</p>
+                <div className='flex'>
+                    <button
+                        type='button'
+                        id='sale'
+                        onClick={handleChange}
+                        className={`mr-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${formData.type === 'rent' ? 'bg-white text-black' : 'bg-slate-600 text-white'}`}
+                    >
+                        Sell
+                    </button>
+                    <button
+                        type='button'
+                        id='rent'
+                        onClick={handleChange}
+                        className={`ml-3 px-7 py-3 font-medium text-sm uppercase shadow-md rounded hover:shadow-lg focus:shadow-lg active:shadow-lg transition duration-150 ease-in-out w-full ${formData.type === 'sale' ? 'bg-white text-black' : 'bg-slate-600 text-white'}`}
+                    >
+                        Rent
+                    </button>
                 </div>
-                <div className='flex flex-col gap-4 flex-1'>
-                    <p>Bedrooms</p>
-                    <input onChange={handleChange} value={formData.bedrooms} type="number" placeholder='Bedrooms' className='border border-rose-300 p-3 rounded-lg' id="bedrooms" min="1" required />
-                    <p>Bathrooms</p>
-                    <input onChange={handleChange} value={formData.bathrooms} type="number" placeholder='Bathrooms' className='border border-rose-300 p-3 rounded-lg' id="bathrooms" min="1" required />
-                    <p>Regular Price</p>
-                    <input onChange={handleChange} value={formData.regularPrice} type="number" placeholder='Regular Price' className='border border-rose-300 p-3 rounded-lg' id="regularPrice" min="1" required />
-                    <p>Discount Price</p>
-                    <input onChange={handleChange} value={formData.discountPrice} type="number" placeholder='Discount Price' className='border border-rose-300 p-3 rounded-lg' id="discountPrice" min="0" required />
-                    <div className='flex gap-4'>
-                        <label className='flex items-center gap-2'>
-                            <input type="checkbox" id="parking" onChange={handleChange} checked={formData.parking} className='w-4 h-4' />
-                            Parking
-                        </label>
-                        <label className='flex items-center gap-2'>
-                            <input type="checkbox" id="furnished" onChange={handleChange} checked={formData.furnished} className='w-4 h-4' />
-                            Furnished
-                        </label>
-                        <label className='flex items-center gap-2'>
-                            <input type="checkbox" id="offer" onChange={handleChange} checked={formData.offer} className='w-4 h-4' />
-                            Offer
-                        </label>
-                    </div>
-                    <div className='flex gap-4'>
-                        <button type="button" id="sale" onClick={handleChange} className={`p-3 rounded-lg ${formData.type === 'sale' ? 'bg-rose-300' : 'bg-gray-200'}`}>Sale</button>
-                        <button type="button" id="rent" onClick={handleChange} className={`p-3 rounded-lg ${formData.type === 'rent' ? 'bg-rose-300' : 'bg-gray-200'}`}>Rent</button>
-                    </div>
-                    <p>Images (6 max):</p>
-                    <div className='border border-rose-300 p-3 rounded-lg'>
-                        <input type="file" accept="image/*" multiple onChange={(e) => setFiles(Array.from(e.target.files))} />
-                        <button type="button" onClick={handleImageSubmit} className='bg-rose-300 p-3 rounded-lg mt-2'>Upload Images</button>
-                        {imageUploadError && <p className="text-red-500 mt-2">{imageUploadError}</p>}
-                        <div className='flex gap-4 mt-2'>
-                            {formData.imageUrls.map((url, index) => (
-                                <div key={index} className='relative'>
-                                    <img src={url} alt="uploaded" className='w-20 h-20 object-cover' />
-                                    <button type="button" onClick={() => handleRemoveImage(index)} className='absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6'>X</button>
-                                </div>
-                            ))}
+
+               </div> 
+
+                <p className='text-lg mt-6 font-semibold'>Amenities</p>
+                <div className='flex flex-wrap'>
+                    {Object.keys(formData.amenities).map((amenity) => (
+                        <div key={amenity} className='mr-4'>
+                            <label>
+                                <input
+                                    type='checkbox'
+                                    id={`amenities.${amenity}`}
+                                    checked={formData.amenities[amenity]}
+                                    onChange={handleChange}
+                                />
+                                {amenity.charAt(0).toUpperCase() + amenity.slice(1).replace(/([A-Z])/g, ' $1')}
+                            </label>
                         </div>
-                    </div>
+                    ))}
                 </div>
-                <div className='flex-1 flex items-center justify-center'>
-                    <button type="submit" className='bg-rose-500 text-white p-3 rounded-lg'>Create Listing</button>
+
+
+
+                <div className=" flex flex-col">
+                <p className='text-lg mt-6 font-semibold'>Upload Images</p>
+                <input
+                    type='file'
+                    id='images'
+                    onChange={(e) => setFiles(e.target.files)}
+                    accept='.jpg,.png,.jpeg'
+                    multiple
+                    className='w-full px-3 py-1.5 text-gray-700 bg-white border border-gray-300 rounded transition ease-in-out'
+                />
+                {imageUploadError && <p className='text-red-600 mt-2'>{imageUploadError}</p>}
+                <button
+                    type='button'
+                    onClick={handleImageSubmit}
+                    className='mt-2 mb-6 w-full bg-blue-600 text-white py-3 px-7 rounded hover:bg-blue-700 active:bg-blue-800'
+                >
+                    {uploading ? 'Uploading...' : 'Upload Images'}
+                </button>
+
+                <div className='flex flex-wrap'>
+                    {formData.imageUrls.map((url, index) => (
+                        <div key={index} className='relative mr-2 mb-2'>
+                            <img src={url} alt={`Image ${index + 1}`} className='w-20 h-20 object-cover' />
+                            <button
+                                type='button'
+                                onClick={() => handleRemoveImage(index)}
+                                className='absolute top-0 right-0 bg-red-600 text-white p-1 rounded-full'
+                            >
+                                &times;
+                            </button>
+                        </div>
+                    ))}
                 </div>
+
+                </div>
+
+                <button type='submit' className='h-20 mt-6 w-full bg-blue-600 text-white py-3 px-7 rounded hover:bg-blue-700 active:bg-blue-800'>
+                    Create Listing
+                </button>
             </form>
-            {loading && <p>Loading...</p>}
-            {error && <p className="text-red-500">{error}</p>}
         </main>
     );
 }

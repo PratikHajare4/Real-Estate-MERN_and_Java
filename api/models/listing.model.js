@@ -70,7 +70,6 @@ const listingSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-
         amenities: {
             gym: {
                 type: Boolean,
@@ -84,11 +83,62 @@ const listingSchema = new mongoose.Schema(
                 type: Boolean,
                 default: false
             },
-            // Add more amenities as needed
+            garden: {
+                type: Boolean,
+                default: false
+            },
+            maintenanceStaff: {
+                type: Boolean,
+                default: false
+            },
+            powerBackup: {
+                type: Boolean,
+                default: false
+            },
+            elevator: {
+                type: Boolean,
+                default: false
+            },
+            waterSupply: {
+                type: Boolean,
+                default: false
+            },
+            carParking: {
+                type: Boolean,
+                default: false
+            },
+            cctv: {
+                type: Boolean,
+                default: false
+            },
+            indoorGames: {
+                type: Boolean,
+                default: false
+            },
+            clubHouse: {
+                type: Boolean,
+                default: false
+            },
+            joggingTrack: {
+                type: Boolean,
+                default: false
+            },
+            rainwaterHarvesting: {
+                type: Boolean,
+                default: false
+            },
+            sewageTreatment: {
+                type: Boolean,
+                default: false
+            },
+            swimmingPool: {
+                type: Boolean,
+                default: false
+            }
         },
     },
     {timestamps: true}
-)
+);
 
 const Listing = mongoose.model('Listing', listingSchema);
 

@@ -94,21 +94,37 @@ export const deleteListing = async (req, res, next) => {
 
 export const  updateListing = async (req, res, next) => {
   const listing = await Listing.findById(req.params.id);
-  if(!listing) {
-    return next(errorHandler(404, 'Listing not found '));
-  }
+
 
   try{
+    if(!listing) {
+      return next(errorHandler(404, 'Listing not found '));
+    }
       const updatedListing = await Listing.findByIdAndUpdate(
         req.params.id,
         req.body,
         {new : true}
       );
        res.status(200).json(updatedListing);
-       
+
   } catch (error) {
     next(error);
 
   }
 
+}
+
+export const getListing = async (req, res, next) => {
+  try {
+    console.log(`Fetching listing with ID: ${req.params.id}`); // Log the ID
+    const listing = await Listing.findById(req.params.id);
+    if (!listing) {
+      console.log(`Listing with ID: ${req.params.id} not found`); // Log if not found
+      return next(errorHandler(404, 'Listing not found'));
+    }
+    res.status(200).json(listing);
+  } catch (error) {
+    console.error(`Error fetching listing: ${error.message}`); // Log any errors
+    next(error);
+  }
 }

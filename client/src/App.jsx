@@ -16,6 +16,8 @@ import Residential from './pages/Residential'
 import Commercial from './pages/Commercial'
 import CreateListing from './pages/CreateListing'
 import Career from './pages/Career'
+import UpdateListing from './pages/UpdateListing'
+import Listing from './pages/Listing'
 
 
  
@@ -43,11 +45,13 @@ export default function App() {
 
 <Route path="/contact" element={<ContactUs/>} />
 {/* <Route path="/admin" element={<Admin/>} /> */}
+<Route path='/listing/:listingId' element={<Listing/>} />
 
 <Route path="/admin/login" element={<SignInPage/>} />
 <Route path="/dash" element={<Dashboard/>} />
 <Route path="/commercial" element={<Commercial/>} />
 <Route path="/create-listing" element={<CreateListing/>} />
+<Route path="/update-listing/:listingId" element={<UpdateListing/>} />
 
 
 <Route path="/career" element={<Career/>} />

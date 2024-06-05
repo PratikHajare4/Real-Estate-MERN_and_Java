@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
 import { app } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-export default function CreateListing() {
+export default function UpdateListing() {
     const navigate = useNavigate();
+    const params = useParams();
     const [files, setFiles] = useState([]);
     const [formData, setFormData] = useState({
     imageUrls: [],
@@ -48,6 +49,28 @@ export default function CreateListing() {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchListing = async () => {
+            const listingId = params.listingId;
+            try {
+                const res = await fetch(`http://localhost:3000/api/listing/get/${listingId}`);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! status: ${res.status}`);
+                }
+                const data = await res.json();
+                if (data.success === false) {
+                    console.log(data.message);
+                    return;
+                }
+                setFormData(data);
+            } catch (err) {
+                console.error("Error fetching listing:", err);
+                setError("Failed to fetch listing information.");
+            }
+        }
+        fetchListing();
+    }, [params.listingId]);
 
     const handleImageSubmit = (e) => {
         if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -170,7 +193,7 @@ export default function CreateListing() {
 
     return (
         <main className='max-w-md px-2 mx-auto'>
-            <h1 className='text-3xl text-center mt-6 font-bold'>Create a Listing</h1>
+            <h1 className='text-3xl text-center mt-6 font-bold'>Update a Listing</h1>
             <form onSubmit={handleSubmit}>
                 
                 <div className='flex flex-col'>
@@ -404,11 +427,11 @@ export default function CreateListing() {
                     ))}
                 </div>
                 <button type='submit' className='h-20 mt-6 w-full bg-blue-600 text-white py-3 px-7 rounded hover:bg-blue-700 active:bg-blue-800'>
-                    Create Listing
+                    Update Listing
                 </button>
                 </div>
 
-               
+                
             </form>
         </main>
     );

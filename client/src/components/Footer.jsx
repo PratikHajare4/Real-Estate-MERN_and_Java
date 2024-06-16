@@ -12,7 +12,7 @@ export default function Footer() {
         <tr>
           <td>
             <h4>ABOUT US</h4>
-            <img src="logo-path.jpg" alt="HomAssist Logo" />
+            {/* <img src="logo-path.jpg" alt="HomAssist Logo" /> */}
             <p>FOLLOW US</p>
             <div>
               <span><a href="https://facebook.com"><i className="fa fa-facebook"></i></a></span>
@@ -58,7 +58,7 @@ export default function Footer() {
   <div className="footer-credits">
     <table>
       <td>© 2024 HomeAssist.com. All Right Reserved.</td>
-      <td>Designed By:Komal Dhawade</td>
+      {/* <td>Designed By:Komal Dhawade</td> */}
     </table>
   </div>
   </footer>

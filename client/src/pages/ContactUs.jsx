@@ -96,7 +96,7 @@ function ContactPage() {
                     {notification.message}
                 </div>
             )}
-            <Footer></Footer>
+            
     </div>
   );
 }

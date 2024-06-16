@@ -7,7 +7,7 @@ export default function Header() {
   const [showBenefitsDropdown, setShowBenefitsDropdown] = useState(false);
 
   return (
-    <header className='bg-sky-600 shadow-md'>
+    <header className='bg-[#1b2136] shadow-md'>
       <div className='flex flex-row justify-between items-center max-w-6xl mx-auto p-3'>
         <Link to="/" >
           <h1 className='font-bold text-sm sm:text-2xl flex flex-wrap'>
@@ -40,9 +40,9 @@ export default function Header() {
    <Link to="/residential">
             <li className='hidden sm:inline  hover:text-black'>Residential</li>
             </Link>
-            <Link to="/commercial">
+            {/* <Link to="/commercial">
             <li className='hidden sm:inline  hover:text-black'>Commercial</li>
-            </Link>
+            </Link> */}
             <Link to="/contact">
             <li className='hidden sm:inline  hover:text-black'>Contact US</li>
             </Link>

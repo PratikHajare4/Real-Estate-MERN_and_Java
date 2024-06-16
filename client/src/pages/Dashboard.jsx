@@ -6,38 +6,7 @@ export default function Dashboard() {
       const [showListingsError, setShowListingError] = useState(false);
       const [userListings, setUserListings] = useState([]);
 
-    // const [listings, setListings] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
   
-    // useEffect(() => {
-    //   // Fetch all listings from the backend
-    //   const fetchListings = async () => {
-    //     try {
-    //       const response = await fetch('http://localhost:3000/api/user/listings'); // Adjust the URL if necessary
-    //       const data = await response.json();
-    //       if (response.ok) {
-    //         setListings(data);
-    //       } else {
-    //         setError(data.message || 'Failed to fetch listings');
-    //       }
-    //     } catch (error) {
-    //       setError(error.message || 'An error occurred');
-    //     } finally {
-    //       setLoading(false);
-    //     }
-    //   };
-  
-    //   fetchListings();
-    // }, []); // Empty array ensures this effect runs once when the component mounts
-  
-    // if (loading) {
-    //   return <p>Loading...</p>;
-    // }
-  
-    // if (error) {
-    //   return <p>Error: {error}</p>;
-    // }
 
     const handleShowListings = async () => {
         try{
@@ -84,14 +53,7 @@ export default function Dashboard() {
     </div>
     </Link>
 
-    {/* <div>
-      <h1>Listings</h1>
-      <ul>
-        {listings.map((listing) => (
-          <li key={listing._id}>{listing.name}</li> // Display listing names, adjust as needed
-        ))}
-      </ul>
-    </div> */}
+
 
 <div className='flex flex-col items-center justify-center gap-4'>
 <button onClick={handleShowListings} className='border p-3 text-rose-700 w-[150px] rounded-lg hover:bg-red-500 hover:text-white mt-2'>Show Listings</button>

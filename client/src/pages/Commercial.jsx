@@ -7,7 +7,7 @@ export default function Commercial() {
       <div class="contact-banner">
         <h1 class="ram">Commercial</h1>
       </div>
-      <Footer></Footer>
+      
     </div>
   )
 }

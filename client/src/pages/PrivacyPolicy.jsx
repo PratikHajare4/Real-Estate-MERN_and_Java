@@ -61,7 +61,7 @@ export default function PrivacyPolicy() {
           By using our site, you consent to our Privacy Policy.
         </p>
       </div>
-      <Footer />
+     
     </div>
   );
 }

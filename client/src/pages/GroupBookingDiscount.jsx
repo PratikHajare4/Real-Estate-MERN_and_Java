@@ -90,7 +90,7 @@ function GroupBookingDiscount() {
             {/* <Footer></Footer> */}
         </div>
         </div>
-        <Footer></Footer>
+        
         </div>
         
     );

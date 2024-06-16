@@ -1,5 +1,5 @@
 import React from 'react'
-import Footer from '../components/Footer'
+
 
 export default function About() {
   return (
@@ -19,7 +19,7 @@ We are a technology-enabled transaction and aggregator platform for Global real 
 </p>
 
     </div>
-    <Footer></Footer>
+   
     </div>
   )
 }

@@ -18,6 +18,7 @@ import CreateListing from './pages/CreateListing'
 import Career from './pages/Career'
 import UpdateListing from './pages/UpdateListing'
 import Listing from './pages/Listing'
+import Footer from './components/Footer'
 
 
  
@@ -60,7 +61,8 @@ export default function App() {
 
 
   </Routes>
+  <Footer/>
   </BrowserRouter>
     
-  
+ 
 }

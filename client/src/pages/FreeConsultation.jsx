@@ -92,7 +92,7 @@ function FreeConsultation() {
             
         </div>
         </div>
-        <Footer></Footer>
+       
         </div>
         
     );

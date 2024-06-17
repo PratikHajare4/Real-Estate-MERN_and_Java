@@ -26,61 +26,40 @@ function Home() {
   const [unitType, setUnitType] = useState('');
   const [city, setCity] = useState('');
   const [budget, setBudget] = useState('');
+  const [userListings, setUserListings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [visibleListings, setVisibleListings] = useState(6); // State to control number of visible listings
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Add API call or other logic here
+    handleShowListings();
   };
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 2000,
-    
-  };
-
-  const testimonialSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    
-  };
-
-  const testimonials = [
-    {
-      quote: "This service is fantastic! We found our dream home in no time.",
-      name: "John Doe",
-      position: "Homeowner"
-    },
-    {
-      quote: "A seamless experience from start to finish. Highly recommend!",
-      name: "Jane Smith",
-      position: "Investor"
-    },
-    {
-      quote: "The best real estate service we've ever used.",
-      name: "Sam Wilson",
-      position: "Renter"
+  const handleShowListings = async () => {
+    try {
+      const res = await fetch('http://localhost:3000/api/user/listings');
+      const data = await res.json();
+      if (data.success === false) {
+        setError('Failed to fetch listings');
+        setLoading(false);
+        return;
+      }
+      setUserListings(data);
+      setLoading(false);
+    } catch (err) {
+      setError('An error occurred while fetching listings');
+      setLoading(false);
     }
-  ];
+  };
 
-  const partners = [
-    { image: partner1, name: "Partner 1" },
-    { image: partner2, name: "Partner 2" },
-    { image: partner3, name: "Partner 3" },
-    { image: partner4, name: "Partner 4" },
-    { image: partner5, name: "Partner 5" },
-    { image: partner6, name: "Partner 6" },
-    { image: partner7, name: "Partner 7" }
-  ];
+  useEffect(() => {
+    handleShowListings();
+  }, []);
+
+  const handleShowMore = () => {
+    setVisibleListings((prevVisibleListings) => prevVisibleListings + 6);
+  };
 
   return (
     <div className="search-container">
@@ -92,66 +71,64 @@ function Home() {
         <button onClick={() => setPropertyType('commercial')} className={propertyType === 'commercial' ? 'active' : ''}>Commercial</button>
       </div>
       <form onSubmit={handleSubmit}>
-        <select className='ram' value={unitType} onChange={e => setUnitType(e.target.value)}>
+        {/* <select className='ram' value={unitType} onChange={e => setUnitType(e.target.value)}>
           <option value="">Select Unit Type</option>
           <option value="apartment">Apartment</option>
           <option value="house">House</option>
-        </select>
-        <input type="text" className="search-city-input" placeholder="Search city" value={city} onChange={e => setCity(e.target.value)} />
-        <select  className='ram'  value={budget} onChange={e => setBudget(e.target.value)}>
+        </select> */}
+        {/* <input type="text" className="search-city-input" placeholder="Search city" value={city} onChange={e => setCity(e.target.value)} /> */}
+        <input type="text" className="search-city-input text-black " placeholder="Search location" value={searchLocation} onChange={e => setSearchLocation(e.target.value)} />
+        <input type="text" className="search-city-input text-black" placeholder="Search name" value={searchName} onChange={e => setSearchName(e.target.value)} />
+        {/* <select className='ram' value={budget} onChange={e => setBudget(e.target.value)}>
           <option value="">Select Budget</option>
           <option value="250000">$250,000</option>
-          <option value="500000">$500,000</option>
-        </select>
+          <option value="500000">$500,000</option> 
+        </select> */}
         <button type="submit" className="search-button"><FaSearch style={{ marginRight: '8px', fontSize: '16px' }} />SEARCH</button>
       </form>
-      <div className="footer">
-        <span>Presence<br/> Asia Pacific-India & UAE</span>
-        <span>100+ <br/>Developers</span>
-        <span>500+ <br/>Projects</span>
-        <span>5000+ <br/>Customers</span>
-      </div>
-
-    
-      {/* Our Partners Slider */}
-      <div className="our-partners">
-        <h2 className="partners-heading text-2xl font-bold mb-4">Our Partners</h2>
-        <Slider {...sliderSettings} className="partner-slider">
-          <div className="slide"><img src={partner1} alt="Partner 1" /></div>
-          <div className="slide"><img src={partner2} alt="Partner 2" /></div>
-          <div className="slide"><img src={partner3} alt="Partner 3" /></div>
-          <div className="slide"><img src={partner4} alt="Partner 4" /></div>
-          <div className="slide"><img src={partner5} alt="Partner 5" /></div>
-          <div className="slide"><img src={partner6} alt="Partner 6" /></div>
-          <div className="slide"><img src={partner7} alt="Partner 7" /></div>
-        </Slider>
-      </div>
-
-      {/* Featured Cities Section */}
-      <div className="featured-cities">
-        <h2 className="cities-heading text-2xl font-bold mb-4">Featured Cities</h2>
-        <div className="city-slider">
-          <Slider {...sliderSettings}>
-            <div className="slide"><img src={city1} alt="City 1" /></div>
-            <div className="slide"><img src={city5} alt="City 5" /></div>
-            <div className="slide"><img src={city3} alt="City 3" /></div>
-            <div className="slide"><img src={city4} alt="City 4" /></div>
-            {/* Add more slides as needed */}
-          </Slider>
-        </div>
-      </div>
-
-       {/* Testimonial Slider */}
-       <h2 className="text-2xl font-bold mb-4">Testimonials</h2>
-      <Slider {...testimonialSettings} className="testimonial-slider mb-6">
-        {testimonials.map((testimonial, index) => (
-          <div key={index} className="testimonial-slide">
-            <blockquote>"{testimonial.quote}"</blockquote>
-            <p>- {testimonial.name}, {testimonial.position}</p>
-          </div>
-        ))}
-      </Slider>
+     
       
+      <div className="p-5">
+        {loading && <p>Loading listings...</p>}
+        {error && <p>{error}</p>}
+        {!loading && userListings && userListings.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {userListings.slice(0, visibleListings).map((listing) => (
+              <div key={listing._id} className="border rounded-lg p-3 shadow-lg bg-white">
+                <Link to={`/listing/${listing._id}`} className="block mb-2">
+                  <img
+                    src={listing.imageUrls[0]}
+                    alt="listing cover"
+                    className="w-full h-48 object-cover rounded-md"
+                  />
+                </Link>
+                <div className="flex justify-between items-center">
+                  <Link className="text-slate-700 font-semibold hover:underline truncate" to={`/listing/${listing._id}`}>
+                    <p>{listing.name}</p>
+                  </Link>
+                  <p className="text-green-500 font-bold">
+                    ${listing.regularPrice}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+        {/* {!loading && userListings.length > visibleListings && (
+          <div className="flex justify-center mt-6">
+            <button onClick={handleShowMore} className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">
+              Show More
+            </button>
+          </div>
+        )} */}
+        {!loading && userListings.length > visibleListings && (
+          <div className="flex justify-center mt-6">
+            <Link to="/residential" className="bg-yellow-500 text-white px-4 py-2 rounded-md hover:bg-yellow-600">
+              View All Listings
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

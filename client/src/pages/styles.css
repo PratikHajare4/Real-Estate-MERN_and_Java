@@ -54,8 +54,8 @@
   .contact-banner {
     position: relative;
     width: 100%;
-    height: 200px;  /* Adjust the height as needed */
-    background-image: url(https://static.vecteezy.com/system/resources/previews/020/804/109/non_2x/communication-and-technology-concept-hand-putting-wooden-block-cube-symbol-telephone-email-address-website-page-contact-us-or-e-mail-marketing-contact-us-in-customer-support-concept-photo.jpg);
+    height: 300px;  /* Adjust the height as needed */
+    background-image: url(../assets/banner.jpg);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -80,7 +80,7 @@
   /* Footer.css */
   .table-footer-container {
     width: 100%;
-    background-color: #333;
+    background-color: #272135;
     color: white;
     padding: 40px 100px;
     box-sizing: border-box;
@@ -110,7 +110,7 @@
   }
   
   .footer-table a {
-    color: white;
+    color: rgb(140, 128, 128);
     text-decoration: none; /* No underlining */
   }
   
@@ -119,7 +119,7 @@
   }
   
   .footer-credits {
-    background-color:green;
+    background-color:rgb(219, 170, 9);
     text-align: center;
     font-size: 0.8rem;
   

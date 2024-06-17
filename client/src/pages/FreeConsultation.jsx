@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { FaCheck, FaTimes } from 'react-icons/fa'
 import './FreeConsultation.css'; // Importing CSS for styles
-import Footer from '../components/Footer';
+
 
 
 function FreeConsultation() {

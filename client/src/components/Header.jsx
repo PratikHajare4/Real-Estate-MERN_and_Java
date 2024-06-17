@@ -7,7 +7,7 @@ export default function Header() {
   const [showBenefitsDropdown, setShowBenefitsDropdown] = useState(false);
 
   return (
-    <header className='bg-[#1b2136] shadow-md'>
+    <header className='bg-yellow-600 shadow-md'>
       <div className='flex flex-row justify-between items-center max-w-6xl mx-auto p-3'>
         <Link to="/" >
           <h1 className='font-bold text-sm sm:text-2xl flex flex-wrap'>
